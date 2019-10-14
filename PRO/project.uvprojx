@@ -389,23 +389,40 @@
               <FileType>1</FileType>
               <FilePath>..\APP\main.c</FilePath>
             </File>
+            <File>
+              <FileName>App.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\App.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Bsp</GroupName>
+          <Files>
+            <File>
+              <FileName>Bsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Bsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>Common_GPIO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Common_GPIO.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>StLibCMSIS</GroupName>
           <Files>
             <File>
-              <FileName>system_stm32f4xx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\STLIB\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c</FilePath>
-            </File>
-            <File>
               <FileName>startup_stm32f411xe.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\STLIB\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f411xe.s</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\system_stm32f4xx.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -375,13 +375,13 @@
  #if defined(USE_HSE_BYPASS)
   #define PLL_M      8    
  #else /* !USE_HSE_BYPASS */
-  #define PLL_M      16
+  #define PLL_M      25
  #endif /* USE_HSE_BYPASS */
 #else
 #endif /* STM32F40_41xxx || STM32F427_437xx || STM32F429_439xx || STM32F401xx || STM32F469_479xx */  
 
 /* USB OTG FS, SDIO and RNG Clock =  PLL_VCO / PLLQ */
-#define PLL_Q      7
+#define PLL_Q      4
 
 #if defined(STM32F446xx)
 /* PLL division factor for I2S, SAI, SYSTEM and SPDIF: Clock =  PLL_VCO / PLLR */
@@ -410,9 +410,9 @@
 #endif /* STM32F401xx */
 
 #if defined(STM32F410xx) || defined(STM32F411xE) || defined(STM32F412xG) || defined(STM32F413_423xx)
-#define PLL_N      400
+#define PLL_N      192
 /* SYSCLK = PLL_VCO / PLL_P */
-#define PLL_P      4   
+#define PLL_P      2   
 #endif /* STM32F410xx || STM32F411xE || STM32F412xG || STM32F413_423xx */
 
 /******************************************************************************/
@@ -446,7 +446,11 @@
 #endif /* STM32F401xx */
 
 #if defined(STM32F410xx) || defined(STM32F411xE) || defined(STM32F412xG) || defined(STM32F413_423xx)
+#if PLL_N == 200
   uint32_t SystemCoreClock = 100000000;
+#elif PLL_N == 192
+  uint32_t SystemCoreClock = 96000000;
+#endif
 #endif /* STM32F410xx || STM32F401xE || STM32F412xG || STM32F413_423xx */
 
 __I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
@@ -766,15 +770,19 @@ static void SetSysClock(void)
          configuration. User can add here some code to deal with this error */
   }
 #elif defined(STM32F410xx) || defined(STM32F411xE)
-#if defined(USE_HSE_BYPASS) 
+#if 1  
 /******************************************************************************/
 /*            PLL (clocked by HSE) used as System clock source                */
 /******************************************************************************/
   __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
   
   /* Enable HSE and HSE BYPASS */
+  
+#if defined(USE_HSE_BYPASS)
   RCC->CR |= ((uint32_t)RCC_CR_HSEON | RCC_CR_HSEBYP);
- 
+#else
+  RCC->CR |= (uint32_t)RCC_CR_HSEON;
+#endif
   /* Wait till HSE is ready and if Time out is reached exit */
   do
   {
@@ -800,10 +808,10 @@ static void SetSysClock(void)
     /* HCLK = SYSCLK / 1*/
     RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
 
-    /* PCLK2 = HCLK / 2*/
+    /* PCLK2 = HCLK / 1*/
     RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
     
-    /* PCLK1 = HCLK / 4*/
+    /* PCLK1 = HCLK / 2*/
     RCC->CFGR |= RCC_CFGR_PPRE1_DIV2;
 
     /* Configure the main PLL */
@@ -834,7 +842,7 @@ static void SetSysClock(void)
   { /* If HSE fails to start-up, the application will have wrong clock
          configuration. User can add here some code to deal with this error */
   }
-#else /* HSI will be used as PLL clock source */
+#elif 0 /* HSI will be used as PLL clock source */
   /* Select regulator voltage output Scale 1 mode */
   RCC->APB1ENR |= RCC_APB1ENR_PWREN;
   PWR->CR |= PWR_CR_VOS;

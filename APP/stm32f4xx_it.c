@@ -29,6 +29,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
+#include "TIM11.h"
 
 /** @addtogroup Template_Project
   * @{
@@ -170,5 +171,11 @@ void SysTick_Handler(void)
   * @}
   */ 
 
+void TIM1_TRG_COM_TIM11_IRQHandler(void){
+	if (TIM_GetITStatus(TIM11, TIM_IT_Update) == SET){
+		TIM_ClearITPendingBit(TIM11,TIM_IT_Update);
+		TIM11_Update_IRQ();
+	}
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
