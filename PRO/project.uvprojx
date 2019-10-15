@@ -409,6 +409,11 @@
               <FileType>1</FileType>
               <FilePath>..\BSP\Common_GPIO.c</FilePath>
             </File>
+            <File>
+              <FileName>TIM11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\TIM11.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -748,6 +753,13 @@
         </Group>
         <Group>
           <GroupName>Task</GroupName>
+          <Files>
+            <File>
+              <FileName>LEDMark.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\TASK\LEDMark.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
